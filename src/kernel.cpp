@@ -111,10 +111,11 @@ static void AYResetHandler(void)
     }
 }
 
-// The Expansion's serial port (uart_16c450.h): on the Raspberry Pi 4 / 400 the UART
-// on GPIO 4 (TXD, header pin 7) and GPIO 5 (RXD, pin 29), polled, opened with the
-// line settings the Jupiter II chooses. The other models have only the UART on
-// GPIO 14 / 15, which the log uses: there the serial port is not connected.
+// The Expansion's serial port (uart_16c450.h): on the Raspberry Pi 4 / 400, when
+// cmdline.txt has jupiterserial=1, the UART on GPIO 4 (TXD, header pin 7) and GPIO 5
+// (RXD, pin 29), polled, opened with the line settings the Jupiter II chooses.
+// Otherwise (and on the other models, whose only UART, on GPIO 14 / 15, the log uses)
+// the serial port is not connected: bytes sent are lost and none arrive.
 #if RASPPI == 4
 #define UART_HOST_DEVICE    3
 
@@ -309,7 +310,10 @@ boolean CKernel::Initialize(void)
     m_Sound.Initialize(&m_Interrupt, m_Options.GetSoundDevice());
     MachineSetAYHandlers(AYWriteHandler, AYResetHandler);
 #ifdef UART_HOST_DEVICE
-    UartSetHost(&s_UartHost);
+    if (m_Options.GetAppOptionString("jupiterserial") != nullptr) {
+        UartSetHost(&s_UartHost);
+        m_Logger.Write(FromKernel, LogNotice, "Serial port on GPIO 4 / 5");
+    }
 #endif
 
     keyboard_init();

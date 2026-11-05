@@ -8,8 +8,8 @@ First version of Jupiter-IIb, an emulator of the Jupiter II and its Expansion bo
  * The Jupiter II Expansion, the default machine: its ROM (start-up screen, extra Forth
    words), 16 colours (INK / PAPER per character cell, BORDER), the AY-3-8910 sound chip
    (stereo), 128K of RAM in four memory pages, screen and character set pages
-   (`MPAGE`, `SCREEN`, `FONT`), and the 16C450 serial port (`BAUD`, `TX`, `RX`) on GPIO 4 / 5
-   of the Raspberry Pi 4 / 400.
+   (`MPAGE`, `SCREEN`, `FONT`), and the 16C450 serial port (`BAUD`, `TX`, `RX`), connected
+   to GPIO 4 / 5 of the Raspberry Pi 4 / 400 with `jupiterserial=1` in `cmdline.txt`.
  * Ctrl+F12 chooses the machine: Jupiter II + Expansion, Jupiter II or Jupiter Ace, the
    last two with a RAM pack.
  * `.ace` snapshots of the Jupiter II with the Expansion keep its whole state (pages, colours,

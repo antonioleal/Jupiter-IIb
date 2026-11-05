@@ -127,11 +127,13 @@ right, C and the beeper on both.
 
 **Serial port.** A 16C450 UART, 8 data bits, 1 stop bit, no parity, 9600 baud after a reset.
 `n BAUD` changes the speed (300 to 19200); `addr n TX` sends n bytes, `addr n RX` receives
-them (Space stops both). On the **Raspberry Pi 4 / 400** it is the Pi's UART on **GPIO 4
-(TXD, header pin 7)** and **GPIO 5 (RXD, header pin 29)**, 3.3 V levels: use a 3.3 V
-USB-serial adapter or level shifter. Bytes take as long as at the chosen speed. On the other
-models it is not connected (their only UART is the debug log's): bytes sent are lost and
-none arrive.
+them (Space stops both). Bytes take as long as at the chosen speed. On the **Raspberry Pi
+4 / 400** it can be connected to the Pi's UART on **GPIO 4 (TXD, header pin 7)** and
+**GPIO 5 (RXD, header pin 29)**, 3.3 V levels (use a 3.3 V USB-serial adapter or level
+shifter): add `jupiterserial=1` to `cmdline.txt` on the SD card (all options on one line,
+separated by spaces, e.g. `sounddev=sndhdmi jupiterserial=1`). Without it, and on the other
+models (their only UART is the debug log's), the serial port is not connected: bytes sent
+are lost and none arrive.
 
 **Other words** of the Expansion ROM: `COUNT`, `+!`, `?`, `CMOVE`, `FILL`, `DEPTH`, `HEX`.
 
